@@ -1,0 +1,25 @@
+{
+    "name": "layered/layered-market-for-wp",
+    "description": "API helpers for Layered Market",
+    "type": "library",
+    "homepage": "https://layered.market/host-your-plugin-or-theme",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Andrei Igna",
+            "email": "andrei@laye.red"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/LayeredStudio/layered-market-for-wp/issues",
+        "source": "https://github.com/LayeredStudio/layered-market-for-wp"
+    },
+    "require": {
+        "yahnis-elsts/plugin-update-checker": "^4.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Layered\\LayeredMarketForWp\\": "src/"
+        }
+    }
+}
