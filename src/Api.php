@@ -11,7 +11,6 @@ class Api {
 	private $type;
 
 	public function __construct($path, $slug) {
-
 		$this->path = $path;
 		$this->slug = $slug;
 		$this->type = strpos($path, '/plugins/') !== false ? 'plugin' : 'theme';
@@ -19,7 +18,7 @@ class Api {
 		// Auto-update
 		$detailsUrl = add_query_arg([
 			'licenseKey'	=>	$this->getLicenseKey()
-		], $this->getMarketUrl('details.json'));
+		], $this->getMarketUrl('update'));
 		$myUpdateChecker = Puc_v4_Factory::buildUpdateChecker($detailsUrl, $path, $slug);
 
 		add_action('admin_footer', [$this, 'adminFooter']);
@@ -37,12 +36,12 @@ class Api {
 		$licenseKey = $this->getLicenseKey();
 
 		if (!$licenseKey) {
-			return new WP_Error('license_key_not_found', __('License Key not found'));
+			return new WP_Error('license_key_not_found', 'License Key not found');
 		}
 
 		$url = add_query_arg([
 			'site'			=>	urlencode(site_url())
-		], 'https://layered.market/license/verify/' . $this->slug . '/' . $licenseKey);
+		], 'https://layered.market/licenses/' . $licenseKey . '/verify/' . $this->slug);
 
 
 		if (isset($_REQUEST[$this->slug . '-recheck-license']) || false === ($licenseData = get_transient($this->slug . '-license-data'))) {
@@ -100,7 +99,7 @@ class Api {
 				<small><a href="<?php echo add_query_arg($this->slug . '-recheck-license', 1) ?>" title="Recheck License">↻</a></small>
 			</p>
 			<p><strong>Auto renew:</strong> <?php echo $license['autoRenew'] ? 'Yes' : 'No' ?></p>
-			<p><a href="https://layered.market" target="_blank">Manage on Layered Market</a></p>
+			<p><a href="https://layered.market/licenses/<?php echo $this->getLicenseKey() ?>" target="_blank">Manage License on Layered Market</a></p>
 
 			<?php
 		}
