@@ -29,7 +29,9 @@ class Api {
 	}
 
 	public function getLicenseKey() {
-		return constant(str_replace('-', '_', strtoupper($this->slug . '_' . $this->type . '_license_key')));
+		$name = str_replace('-', '_', strtoupper($this->slug . '_' . $this->type . '_license_key'))
+
+		return defined($name) ? constant($name) : null;
 	}
 
 	public function getLicense() {
@@ -99,7 +101,7 @@ class Api {
 				<small><a href="<?php echo add_query_arg($this->slug . '-recheck-license', 1) ?>" title="Recheck License">↻</a></small>
 			</p>
 			<p><strong>Auto renew:</strong> <?php echo $license['autoRenew'] ? 'Yes' : 'No' ?></p>
-			<p><a href="https://layered.market/licenses/<?php echo $this->getLicenseKey() ?>" target="_blank">Manage License on Layered Market</a></p>
+			<p><a href="https://layered.market/licenses/<?php echo $this->getLicenseKey() ?>" target="_blank">Manage License on Layered Market ❐</a></p>
 
 			<?php
 		}
