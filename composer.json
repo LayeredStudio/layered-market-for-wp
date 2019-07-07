@@ -2,7 +2,7 @@
     "name": "layered/layered-market-for-wp",
     "description": "API helpers for Layered Market",
     "type": "library",
-    "homepage": "https://layered.market/host-your-plugin-or-theme",
+    "homepage": "https://layered.market/developers",
     "license": "GPL-3.0-or-later",
     "authors": [
         {
