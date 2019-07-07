@@ -29,7 +29,7 @@ class Api {
 	}
 
 	public function getLicenseKey() {
-		$name = str_replace('-', '_', strtoupper($this->slug . '_' . $this->type . '_license_key'))
+		$name = str_replace('-', '_', strtoupper($this->slug . '_' . $this->type . '_license_key'));
 
 		return defined($name) ? constant($name) : null;
 	}
