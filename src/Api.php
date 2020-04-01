@@ -10,10 +10,10 @@ class Api {
 	private $slug;
 	private $type;
 
-	public function __construct($path, $slug) {
+	public function __construct($path, $slug, $type = null) {
 		$this->path = $path;
 		$this->slug = $slug;
-		$this->type = strpos($path, '/plugins/') !== false ? 'plugin' : 'theme';
+		$this->type = $type ?: (strpos($path, '/themes/') !== false ? 'theme' : 'plugin');
 
 		// Auto-update
 		$detailsUrl = add_query_arg([
@@ -51,13 +51,13 @@ class Api {
 
 			if (in_array(wp_remote_retrieve_response_code($response), [200, 400])) {
 				$licenseData = json_decode(wp_remote_retrieve_body($response), true);
-				set_transient($this->slug . '-license-data', $licenseData, 24 * WEEK_IN_SECONDS);
+				set_transient($this->slug . '-license-data', $licenseData, WEEK_IN_SECONDS);
 			} else {
 				$licenseData = [
 					'error_code'	=>	'license_invalid',
 					'error_message'	=>	'Could not verify the License Key'
 				];
-				set_transient($this->slug . '-license-data', $licenseData, DAY_IN_SECONDS);
+				set_transient($this->slug . '-license-data', $licenseData, 6 * HOUR_IN_SECONDS);
 			}
 		}
 
